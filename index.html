@@ -1,0 +1,393 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <title>Cash Counter</title>
+        <style>
+            body {
+                width: 95%;
+                margin: 50px auto 0;
+                padding: 0;
+            }
+
+            h2 {
+                text-align: center;
+            }
+
+            #container {
+                display: flex;
+                align-items: center;
+                justify-content: space-around;
+            }
+
+            #container > div {
+                text-align: center;
+                width: 100%;
+            }
+
+            .input-container {
+                display: flex;
+                align-items: center;
+                justify-content: space-between;
+                margin: 15px 0;
+            }
+
+            .input-text {
+                width: 100%;
+                text-align: right;
+                padding-right: 10px;
+            }
+
+            .input-value > input {
+                height: 100%;
+            }
+
+            #button {
+                display: flex;
+                align-items: center;
+                justify-content: center;
+            }
+        </style>
+    </head>
+    <body>
+        <h2>Cash Calculator</h2>
+        <div id="container">
+            <div id="user-input">
+                <div id="cash-hundred" class="input-container">
+                    <div id="cash-hundred-text" class="input-text">100</div>
+                    <div id="cash-hundred-input" class="input-value">
+                        <input
+                            type="number"
+                            min="0"
+                            oninput="onCashHundredChange(this);"
+                        />
+                    </div>
+                </div>
+                <div id="cash-fifty" class="input-container">
+                    <div id="cash-fifty-text" class="input-text">50</div>
+                    <div id="cash-fifty-input" class="input-value">
+                        <input
+                            type="number"
+                            min="0"
+                            oninput="onCashFiftyChange(this);"
+                        />
+                    </div>
+                </div>
+                <div id="cash-twenty" class="input-container">
+                    <div id="cash-twenty-text" class="input-text">20</div>
+                    <div id="cash-twenty-input" class="input-value">
+                        <input
+                            type="number"
+                            min="0"
+                            oninput="onCashTwentyChange(this);"
+                        />
+                    </div>
+                </div>
+                <div id="cash-ten" class="input-container">
+                    <div id="cash-ten-text" class="input-text">10</div>
+                    <div id="cash-ten-input" class="input-value">
+                        <input
+                            type="number"
+                            min="0"
+                            oninput="onCashTenChange(this);"
+                        />
+                    </div>
+                </div>
+                <div id="cash-five" class="input-container">
+                    <div id="cash-five-text" class="input-text">5</div>
+                    <div id="cash-five-input" class="input-value">
+                        <input
+                            type="number"
+                            min="0"
+                            oninput="onCashFiveChange(this);"
+                        />
+                    </div>
+                </div>
+                <div id="cash-one" class="input-container">
+                    <div id="cash-one-text" class="input-text">1</div>
+                    <div id="cash-one-input" class="input-value">
+                        <input
+                            type="number"
+                            min="0"
+                            oninput="onCashOneChange(this);"
+                        />
+                    </div>
+                </div>
+                <div id="coin-quarter" class="input-container">
+                    <div id="coin-quarter-text" class="input-text">
+                        0.25 (Quarters)
+                    </div>
+                    <div id="coin-quarter-input" class="input-value">
+                        <input
+                            type="number"
+                            min="0"
+                            oninput="onCoinQuarterChange(this);"
+                        />
+                    </div>
+                </div>
+                <div id="coin-dime" class="input-container">
+                    <div id="coin-dime-text" class="input-text">
+                        0.10 (Dimes)
+                    </div>
+                    <div id="coin-dime-input" class="input-value">
+                        <input
+                            type="number"
+                            min="0"
+                            oninput="onCoinDimeChange(this);"
+                        />
+                    </div>
+                </div>
+                <div id="coin-nickel" class="input-container">
+                    <div id="coin-nickel-text" class="input-text">
+                        0.05 (Nickels)
+                    </div>
+                    <div id="coin-nickel-input" class="input-value">
+                        <input
+                            type="number"
+                            min="0"
+                            oninput="onCoinNickelChange(this);"
+                        />
+                    </div>
+                </div>
+                <div id="coin-penny" class="input-container">
+                    <div id="coin-penny-text" class="input-text">
+                        0.01 (Pennies)
+                    </div>
+                    <div id="coin-penny-input" class="input-value">
+                        <input
+                            type="number"
+                            min="0"
+                            oninput="onCoinPennyChange(this);"
+                        />
+                    </div>
+                </div>
+            </div>
+            <div id="user-output">0.00</div>
+        </div>
+        <div id="button">
+            <button onclick="reset();">Reset</button>
+        </div>
+    </body>
+    <script>
+        const userOutput = document.getElementById('user-output');
+        const cashHundredInput = document.querySelector(
+            '#cash-hundred-input>input'
+        );
+        const cashFiftyInput = document.querySelector(
+            '#cash-fifty-input>input'
+        );
+        const cashTwentyInput = document.querySelector(
+            '#cash-twenty-input>input'
+        );
+        const cashTenInput = document.querySelector('#cash-ten-input>input');
+        const cashFiveInput = document.querySelector('#cash-five-input>input');
+        const cashOneInput = document.querySelector('#cash-one-input>input');
+        const coinQuarterInput = document.querySelector(
+            '#coin-quarter-input>input'
+        );
+        const coinDimeInput = document.querySelector('#coin-dime-input>input');
+        const coinNickelInput = document.querySelector(
+            '#coin-nickel-input>input'
+        );
+        const coinPennyInput = document.querySelector(
+            '#coin-penny-input>input'
+        );
+
+        const onCashHundredChange = (e) => {
+            const val = e.value;
+            if (val < 0) {
+                return;
+            }
+            getCurrentValue();
+            let amount = Number(
+                getCurrentValue(100) + Number(Number(val * 100).toFixed(2))
+            ).toFixed(2);
+            userOutput.innerText = String(amount);
+        };
+
+        const onCashFiftyChange = (e) => {
+            const val = e.value;
+            if (val < 0) {
+                return;
+            }
+            let amount = Number(
+                getCurrentValue(50) + Number(Number(val * 50).toFixed(2))
+            ).toFixed(2);
+            userOutput.innerText = String(amount);
+        };
+
+        const onCashTwentyChange = (e) => {
+            const val = e.value;
+            if (val < 0) {
+                return;
+            }
+            let amount = Number(
+                getCurrentValue(20) + Number(Number(val * 20).toFixed(2))
+            ).toFixed(2);
+            userOutput.innerText = String(amount);
+        };
+
+        const onCashTenChange = (e) => {
+            const val = e.value;
+            if (val < 0) {
+                return;
+            }
+            let amount = Number(
+                getCurrentValue(10) + Number(Number(val * 10).toFixed(2))
+            ).toFixed(2);
+            userOutput.innerText = String(amount);
+        };
+
+        const onCashFiveChange = (e) => {
+            const val = e.value;
+            if (val < 0) {
+                return;
+            }
+            let amount = Number(
+                getCurrentValue(5) + Number(Number(val * 5).toFixed(2))
+            ).toFixed(2);
+            userOutput.innerText = String(amount);
+        };
+
+        const onCashOneChange = (e) => {
+            const val = e.value;
+            console.log(e.val);
+            if (val < 0) {
+                return;
+            }
+            let amount = Number(
+                getCurrentValue(1) + Number(Number(val * 1).toFixed(2))
+            ).toFixed(2);
+            console.log(amount);
+            userOutput.innerText = String(amount);
+        };
+
+        const onCoinQuarterChange = (e) => {
+            const val = e.value;
+            if (val < 0) {
+                return;
+            }
+            let amount = Number(
+                getCurrentValue(0.25) + Number(Number(val * 0.25).toFixed(2))
+            ).toFixed(2);
+            userOutput.innerText = String(amount);
+        };
+
+        const onCoinDimeChange = (e) => {
+            const val = e.value;
+            if (val < 0) {
+                return;
+            }
+            let amount = Number(
+                getCurrentValue(0.1) + Number(Number(val * 0.1).toFixed(2))
+            ).toFixed(2);
+            userOutput.innerText = String(amount);
+        };
+
+        const onCoinNickelChange = (e) => {
+            const val = e.value;
+            if (val < 0) {
+                return;
+            }
+            let amount = Number(
+                getCurrentValue(0.05) + Number(Number(val * 0.05).toFixed(2))
+            ).toFixed(2);
+            userOutput.innerText = String(amount);
+        };
+
+        const onCoinPennyChange = (e) => {
+            const val = e.value;
+            if (val < 0) {
+                return;
+            }
+            let amount = Number(
+                getCurrentValue(0.01) + Number(Number(val * 0.01).toFixed(2))
+            ).toFixed(2);
+            userOutput.innerText = String(amount);
+        };
+
+        const reset = () => {
+            cashHundredInput.value = '';
+            cashFiftyInput.value = '';
+            cashTwentyInput.value = '';
+            cashTenInput.value = '';
+            cashFiveInput.value = '';
+            cashOneInput.value = '';
+            coinQuarterInput.value = '';
+            coinDimeInput.value = '';
+            coinNickelInput.value = '';
+            coinPennyInput.value = '';
+            userOutput.innerText = '0.00';
+        };
+
+        const getCurrentValue = (toExclude) => {
+            const cashHundredInputValue = cashHundredInput.value
+                ? Number(cashHundredInput.value)
+                : 0;
+            const cashFiftyInputValue = cashFiftyInput.value
+                ? Number(cashFiftyInput.value)
+                : 0;
+            const cashTwentyInputValue = cashTwentyInput.value
+                ? Number(cashTwentyInput.value)
+                : 0;
+            const cashTenInputValue = cashTenInput.value
+                ? Number(cashTenInput.value)
+                : 0;
+            const cashFiveInputValue = cashFiveInput.value
+                ? Number(cashFiveInput.value)
+                : 0;
+            const cashOneInputValue = cashOneInput.value
+                ? Number(cashOneInput.value)
+                : 0;
+            const coinQuarterInputValue = coinQuarterInput.value
+                ? Number(coinQuarterInput.value)
+                : 0;
+            const coinDimeInputValue = coinDimeInput.value
+                ? Number(coinDimeInput.value)
+                : 0;
+            const coinNickelInputValue = coinNickelInput.value
+                ? Number(coinNickelInput.value)
+                : 0;
+            const coinPennyInputValue = coinPennyInput.value
+                ? Number(coinPennyInput.value)
+                : 0;
+
+            let total = 0;
+            if (toExclude !== 100) {
+                total += Number(Number(cashHundredInputValue * 100).toFixed(2));
+            }
+            if (toExclude !== 50) {
+                total += Number(Number(cashFiftyInputValue * 50).toFixed(2));
+            }
+            if (toExclude !== 20) {
+                total += Number(Number(cashTwentyInputValue * 20).toFixed(2));
+            }
+            if (toExclude !== 10) {
+                total += Number(Number(cashTenInputValue * 10).toFixed(2));
+            }
+            if (toExclude !== 5) {
+                total += Number(Number(cashFiveInputValue * 5).toFixed(2));
+            }
+            if (toExclude !== 1) {
+                total += Number(cashOneInputValue.toFixed(2));
+            }
+            if (toExclude !== 0.25) {
+                total += Number(
+                    Number(coinQuarterInputValue * 0.25).toFixed(2)
+                );
+            }
+            if (toExclude !== 0.1) {
+                total += Number(Number(coinDimeInputValue * 0.1).toFixed(2));
+            }
+            if (toExclude !== 0.05) {
+                total += Number(Number(coinNickelInputValue * 0.05).toFixed(2));
+            }
+            if (toExclude !== 0.01) {
+                total += Number(Number(coinPennyInputValue * 0.01).toFixed(2));
+            }
+
+            return total;
+        };
+    </script>
+</html>
